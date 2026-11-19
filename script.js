@@ -1,0 +1,9 @@
+var B=[["Miejski Classic","Miejski","🚲",40,true,"7 przerzutek, kosz"],["City Comfort","Miejski","🚲",45,true,"Wygodne siodło, błotniki"],["Trail Pro","Górski","🚵",70,true,"Amortyzator, 21 biegów"],["Rock Master","Górski","🚵",80,false,"Hamulce tarczowe"],["Volt E-City","Elektryczny","⚡",120,true,"Zasięg do 80 km"],["Volt E-Trek","Elektryczny","⚡",140,true,"Silnik 250 W"],["Kid Mini","Dziecięcy","🧒",25,true,"Koła 20 cali"],["Road Sprint","Szosowy","🏁",75,false,"Lekka rama aluminiowa"]];
+var cat="Wszystkie",cats=["Wszystkie"].concat(B.map(function(b){return b[1]}).filter(function(v,i,a){return a.indexOf(v)==i}));
+var cE=document.getElementById("cats"),g=document.getElementById("grid"),t=document.getElementById("toast");
+function toast(m){t.textContent=m;t.className="on";clearTimeout(toast.h);toast.h=setTimeout(function(){t.className=""},2400)}
+function draw(){g.innerHTML="";B.forEach(function(b){if(cat!="Wszystkie"&&b[1]!=cat)return;var d=document.createElement("div");d.className="card";
+d.innerHTML='<div class="pic">'+b[2]+'</div><div class="cb"><span class="tag'+(b[4]?'':' no')+'">'+(b[4]?"Dostępny":"Niedostępny")+'</span><h3>'+b[0]+'</h3><div class="meta">'+b[1]+" · "+b[5]+'</div><div class="row"><span class="price">'+b[3]+' zł/doba</span><button class="btn"'+(b[4]?"":" disabled")+'>Zarezerwuj</button></div></div>';
+d.querySelector("button").onclick=function(){toast("Zarezerwowano: "+b[0])};g.appendChild(d)})}
+function chips(){cE.innerHTML="";cats.forEach(function(c){var x=document.createElement("button");x.className="chip";x.textContent=c;x.setAttribute("aria-pressed",c==cat);x.onclick=function(){cat=c;chips();draw()};cE.appendChild(x)})}
+chips();draw();
